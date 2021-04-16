@@ -1,0 +1,22 @@
+{
+  "name": "lego-mechanum-car",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samgcode/lego-mechanum-car.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samgcode/lego-mechanum-car/issues"
+  },
+  "homepage": "https://github.com/samgcode/lego-mechanum-car#readme",
+  "dependencies": {
+    "phidget22": "^2.6.17"
+  }
+}
