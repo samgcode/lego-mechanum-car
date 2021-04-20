@@ -25,7 +25,6 @@ class PhidgetController {
         try {
             await conn.connect()
             await this.setupMotorFunctions()
-            await this.initMotors()
             await this.timeout(1000)
         } catch (err) {
             console.error('Error running example:', err.message)
@@ -76,15 +75,16 @@ class PhidgetController {
 
         console.log('connected to server')
 
-        this.motorA = this.createMotor(0, 0)
-        this.motorB = this.createMotor(0, 1)
-        this.motorC = this.createMotor(1, 0)
-        this.motorD = this.createMotor(1, 1)
-        
+        this.motorA = await this.createMotor(0, 0)
+        this.motorB = await this.createMotor(0, 1)
+        this.motorC = await this.createMotor(1, 0)
+        this.motorD = await this.createMotor(1, 1)
+
+        console.log('created motors')
     }
 
     async createMotor(hubPort, channel) {
-        motor = new phidget22.DCMotor()
+        let motor = new phidget22.DCMotor()
         
         motor.setChannel(channel)
         motor.setHubPort(hubPort)
@@ -122,4 +122,4 @@ class PhidgetController {
     }
 }
 
-export default PhidgetController
+module.exports = PhidgetController

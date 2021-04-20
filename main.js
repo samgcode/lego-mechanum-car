@@ -1,11 +1,11 @@
-import PhidgetController from './PhidgetContoller'
-import Drive from './drive'
+const PhidgetController = require('./PhidgetContoller')
+const Drive = require('./drive')
 
 async function main() {
     let phidgetController = new PhidgetController()
-    const drive = new Drive()
-
     await phidgetController.init()
+    
+    const drive = new Drive(phidgetController)
 
     drive.start()
 }
