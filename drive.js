@@ -27,6 +27,8 @@ class Drive {
         // console.log(`Speed: ${this.xSpeed}, ${this.ySpeed}, ${this.turnSpeed}`)
 
         this.imu.updateTelemetry()
+        this.heading = Math.round(this.imu.heading)
+        console.log(`Heading: ${this.heading}`)
 
         this.motorA.setPower(-((this.ySpeed - this.xSpeed) + this.turnSpeed))
         this.motorB.setPower(((this.ySpeed - this.xSpeed) - this.turnSpeed))
