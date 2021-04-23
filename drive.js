@@ -1,8 +1,10 @@
 const readline = require('readline')
 
 class Drive {
-    constructor(controller) {
+    constructor(controller, imu) {
         
+        this.imu = imu
+
         this.motorA = controller.motorA
         this.motorB = controller.motorB
         this.motorC = controller.motorC
@@ -18,12 +20,13 @@ class Drive {
         console.log('start')
         this.looper = setInterval(() => {
             this.loop()
-        }, 50)
+        }, 200)
     }
     
     loop() {
-        console.log(`Speed: ${this.xSpeed}, ${this.ySpeed}, ${this.turnSpeed}`)
+        // console.log(`Speed: ${this.xSpeed}, ${this.ySpeed}, ${this.turnSpeed}`)
 
+        this.imu.updateTelemetry()
 
         this.motorA.setPower(-((this.ySpeed - this.xSpeed) + this.turnSpeed))
         this.motorB.setPower(((this.ySpeed - this.xSpeed) - this.turnSpeed))
