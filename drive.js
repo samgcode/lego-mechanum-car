@@ -20,24 +20,46 @@ class Drive {
         console.log('start')
         this.looper = setInterval(() => {
             this.loop()
-        }, 200)
+        }, 400)
     }
     
     loop() {
-        // console.log(`Speed: ${this.xSpeed}, ${this.ySpeed}, ${this.turnSpeed}`)
-
+        
         this.imu.updateTelemetry()
         this.heading = Math.round(this.imu.heading)
         console.log(`Heading: ${this.heading}`)
+        console.log(`Speed: ${this.xSpeed}, ${this.ySpeed}, ${this.turnSpeed}`)
 
-        this.motorA.setPower(-((this.ySpeed - this.xSpeed) + this.turnSpeed))
-        this.motorB.setPower(((this.ySpeed - this.xSpeed) - this.turnSpeed))
-        this.motorC.setPower(-((this.ySpeed + this.xSpeed) + this.turnSpeed))
-        this.motorD.setPower(((this.ySpeed + this.xSpeed) - this.turnSpeed))
+        this.normalizeSpeed(this.xSpeed, this.ySpeed)
+        
+        
+        const powerA = -((this.ySpeed - this.xSpeed) + this.turnSpeed) // \\
+        const powerB = ((this.ySpeed + this.xSpeed) - this.turnSpeed)  // //
+        const powerC = -((this.ySpeed + this.xSpeed) + this.turnSpeed) // \\
+        const powerD = ((this.ySpeed - this.xSpeed) - this.turnSpeed)  // //
+        
+        console.log(`Motors: ${this.clip(powerA, -1, 1)}, ${this.clip(powerB, -1, 1)}, ${this.clip(powerC, -1, 1)}, ${this.clip(powerD, -1, 1)}`)
+        this.motorA.setPower(this.clip(powerA, -1, 1))
+        this.motorB.setPower(this.clip(powerB, -1, 1))
+        this.motorC.setPower(this.clip(powerC, -1, 1))
+        this.motorD.setPower(this.clip(powerD, -1, 1))
 
         this.xSpeed = 0
         this.ySpeed = 0
         this.turnSpeed = 0
+    }
+
+    normalizeSpeed(x, y) {
+        const headingRadians = this.heading * (Math.PI / 180)
+        const xSpeed = x*Math.cos(headingRadians) - y*Math.sin(headingRadians)
+        const ySpeed = x*Math.sin(headingRadians) + y*Math.cos(headingRadians)
+
+        this.xSpeed = Number.parseFloat(xSpeed.toFixed(1))
+        this.ySpeed = Number.parseFloat(ySpeed.toFixed(1))
+    }
+
+    clip(val, min, max) {
+        return Math.min(Math.max(min, val), max)
     }
 
     setupKeypressHandler() {
@@ -81,8 +103,8 @@ class Drive {
 }
 
 /*
-    Y
-
+    Y -------
+            v
 A  ^^^  B
 
 >       >   X
