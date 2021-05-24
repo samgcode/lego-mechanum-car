@@ -1,6 +1,6 @@
-const PhidgetController = require('./PhidgetContoller')
+const PhidgetController = require('./setup/PhidgetContoller')
 const Drive = require('./drive')
-const IMU = require('./imu')
+const IMU = require('./input/imu')
 
 async function main() {
     const phidgetController = new PhidgetController()

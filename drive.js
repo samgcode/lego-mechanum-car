@@ -35,8 +35,8 @@ class Drive {
         
         const powerA = -((this.ySpeed - this.xSpeed) + this.turnSpeed) // \\
         const powerB = ((this.ySpeed + this.xSpeed) - this.turnSpeed)  // //
-        const powerC = -((this.ySpeed + this.xSpeed) + this.turnSpeed) // \\
-        const powerD = ((this.ySpeed - this.xSpeed) - this.turnSpeed)  // //
+        const powerC = -((this.ySpeed + this.xSpeed) + this.turnSpeed) // //
+        const powerD = ((this.ySpeed - this.xSpeed) - this.turnSpeed)  // \\
         
         console.log(`Motors: ${this.clip(powerA, -1, 1)}, ${this.clip(powerB, -1, 1)}, ${this.clip(powerC, -1, 1)}, ${this.clip(powerD, -1, 1)}`)
         this.motorA.setPower(this.clip(powerA, -1, 1))

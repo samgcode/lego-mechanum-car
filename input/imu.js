@@ -1,5 +1,5 @@
 const mpu = require('mpu6050-dmp')
-const sleep = require('./sleepAsync')
+const sleep = require('../setup/sleepAsync')
 
 class IMU {
     constructor() {
@@ -35,8 +35,6 @@ class IMU {
     setHeadingOffset() {
       this.headingOffset = Math.round(this.heading)
     }
-
-    
 }
 
 module.exports = IMU
